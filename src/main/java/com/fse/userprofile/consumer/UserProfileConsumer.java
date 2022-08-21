@@ -17,19 +17,19 @@ import static org.springframework.web.reactive.function.client.WebClient.builder
 public class UserProfileConsumer {
     //@Autowired
     //RestTemplate restTemplate;
-    @Value("${kafka.service.url}")
-    public static String MDB_BASE_URL;
+    @Value("${mongo.service.url}")
+    public String MDB_BASE_URL;
     WebClient webClient;
     public UserProfileConsumer(WebClient.Builder builder){
         System.out.println("URLLLLL"+MDB_BASE_URL);
-        this.webClient = builder().baseUrl("http://localhost:8086")
+        this.webClient = builder().baseUrl("http://ec2-13-233-206-92.ap-south-1.compute.amazonaws.com:8086")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
     @KafkaListener(topics = "userprofile-events",groupId = "${spring.kafka.consumer.group-id}")
     public void consumeMessage(User user){
-        System.out.println("User :"+Configs.kafkaServiceUrl);
+        System.out.println("User :"+MDB_BASE_URL);
         User user1 = this.webClient.post().uri("/userprofile/saveuser").bodyValue(user).retrieve().bodyToMono(User.class).block();
         System.out.println("Saved to MDB:"+user1.toString());
     }

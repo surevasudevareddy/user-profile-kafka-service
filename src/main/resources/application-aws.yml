@@ -1,0 +1,28 @@
+spring:
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: upgroup-1
+      properties[spring:
+        json:
+          trusted:
+            packages]: com.fse.userprofile
+          value:
+            default:
+              type]: com.fse.userprofile.model.User
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    bootstrap-servers: ec2-13-234-117-22.ap-south-1.compute.amazonaws.com:9092
+    topic: userprofile-events
+  application:
+    name: userprofile-messaging-service
+mongo:
+  service:
+    url: http://ec2-13-233-206-92.ap-south-1.compute.amazonaws.com:8086
+logging:
+  level:
+    web: DEBUG
+server:
+  port: '8087'

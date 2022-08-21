@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Configs {
-    @Value("${spring.mongo.service.url}")
-    public static String kafkaServiceUrl;
+    @Value("${mongo.service.url}")
+    public String kafkaServiceUrl;
 }
